@@ -1227,6 +1227,12 @@ footer {
       <div class="deploy-step-desc">Descarga WhatsApp Business en tu celular → Configura el perfil de negocio "VELTRO" → Actualiza el número en el botón de WhatsApp de esta página con tu número real.</div>
       <div class="deploy-code">wa.me/57TUNUMERO</div>
     </div>
+    <div class="deploy-step">
+      <div class="deploy-num">07</div>
+      <div class="deploy-step-title">Google Sheets — Sincronización</div>
+      <div class="deploy-step-desc">Crea un Google Sheet en blanco. Ve a Extensiones > Apps Script. Pega el código que te compartí, y publícalo como Aplicación Web (con "Cualquier persona"). Luego, pega la URL final en la variable WEBHOOK_SHEETS_URL del archivo index.html.html.</div>
+      <div class="deploy-code">var WEBHOOK_SHEETS_URL = 'https://script.google.com/...'</div>
+    </div>
   </div>
 </section>
 
@@ -1275,6 +1281,10 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 // Admin password (cámbiala)
 const ADMIN_PASSWORD = 'veltro2025';
+
+// 🔗 WEBHOOK PARA GOOGLE SHEETS
+// Pega aquí la URL terminada en /exec que te da Google Apps Script
+const WEBHOOK_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxqte0pz5GmxS1BqymXyAMRiqTlmmqGohUElY_PiXEQSupwhmFUwcPhVEKElBNoEoZAmQ/exec';
 
 // ══════════════════════════════════════════
 // ESTADO GLOBAL
@@ -1548,6 +1558,17 @@ async function submitOrder() {
 
   try {
     await supabaseFetch('/rest/v1/pedidos', 'POST', orderData);
+    
+    // Novedad: Enviar también a Google Sheets si la URL está configurada
+    if (WEBHOOK_SHEETS_URL && WEBHOOK_SHEETS_URL.trim() !== '') {
+      fetch(WEBHOOK_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Importante para evitar bloqueos por CORS desde Google Apps Script
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      }).catch(err => console.error("Error sincronizando Sheets:", err));
+    }
+
     document.getElementById('successMsg').textContent = `¡Pedido ${orderData.order_id} confirmado, ${nombre}! Te contactaremos al ${tel} para coordinar el pago por ${selectedPayment}. ¡Gracias por elegir VELTRO! ✨`;
     cart = [];
     updateCartUI();
