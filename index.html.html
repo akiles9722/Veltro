@@ -771,6 +771,27 @@ footer {
   .payment-options { grid-template-columns: 1fr; }
 }
 
+/* ── LIGHTBOX ── */
+.lightbox-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+  z-index: 99999; display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(5px);
+}
+.lightbox-overlay.open { display: flex; }
+.lightbox-img {
+  max-width: 90%; max-height: 90vh; object-fit: contain;
+  border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  transition: transform 0.3s;
+}
+.lightbox-close {
+  position: absolute; top: 20px; right: 20px;
+  background: rgba(255,255,255,0.2); border: none; color: white;
+  width: 44px; height: 44px; border-radius: 50%; font-size: 28px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
 /* ── LOADING */
 .loading-spinner {
   display: flex; align-items: center; justify-content: center;
@@ -819,6 +840,12 @@ footer {
     💬
     <span class="chat-tooltip">WhatsApp Business</span>
   </button>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="Vista previa del producto" onclick="event.stopPropagation()">
 </div>
 
 <!-- TOAST -->
@@ -1311,7 +1338,7 @@ function createProductCard(p) {
 
   const slidesHtml = fotos.map(f => isEmoji
     ? `<div class="product-img product-img-placeholder">${f}</div>`
-    : `<div class="product-img"><img src="${f}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;"></div>`
+    : `<div class="product-img"><img src="${f}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;" onclick="openLightbox('${f}')"></div>`
   ).join('');
 
   const badgeHtml = p.badge === 'new' ? '<div class="product-badge badge-new">Nuevo</div>'
@@ -1338,7 +1365,7 @@ function createProductCard(p) {
       <div class="product-desc">${p.descripcion || ''}</div>
       <div class="product-footer">
         <div class="product-price">${precio}</div>
-        <button class="btn-cart" onclick="addToCart(${JSON.stringify(JSON.stringify(p)).slice(1,-1)})">+ Añadir</button>
+        <button class="btn-cart" onclick="addToCart(decodeURIComponent('${encodeURIComponent(JSON.stringify(p)).replace(/'/g, "%27")}'))">+ Añadir</button>
       </div>
     </div>`;
   return div;
@@ -1588,6 +1615,19 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ══════════════════════════════════════════
+// LIGHTBOX
+// ══════════════════════════════════════════
+function openLightbox(src) {
+  const overlay = document.getElementById('lightboxOverlay');
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
+  overlay.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').classList.remove('open');
 }
 
 // ══════════════════════════════════════════
