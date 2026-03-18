@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VELTRO — Moda que te define</title>
+<title>NEXFIT — Moda para toda la familia</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #F7F0E6;
-  --warm: #EDE0CC;
-  --terra: #C4622D;
-  --terra2: #A84E22;
-  --burgundy: #5C1A2E;
-  --burgundy2: #3D0F1E;
-  --gold: #C9A96E;
-  --gold2: #A8864A;
-  --brown: #2C1810;
-  --muted: #8C7B6B;
-  --text: #1A0F08;
+  --cream: #F5F7F2;
+  --warm: #E8F0E9;
+  --terra: #2E7D52;
+  --terra2: #1F6B42;
+  --burgundy: #1A3A2A;
+  --burgundy2: #0F2318;
+  --gold: #D4A843;
+  --gold2: #B8902E;
+  --brown: #0D1F16;
+  --muted: #6B8C78;
+  --text: #0F1F16;
   --white: #FDFAF6;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -329,6 +329,20 @@ nav a:hover { color: var(--terra); }
 }
 .badge-new { background: var(--terra); color: white; }
 .badge-hot { background: var(--burgundy); color: var(--gold); }
+.badge-agotado { background: #555; color: white; }
+.product-card.agotado .product-image-wrap { filter: grayscale(60%); }
+.btn-cart:disabled { background: #aaa; color: white; cursor: not-allowed; }
+.btn-agotado-toggle {
+  width: 100%; margin-top: 8px; padding: 7px;
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  font-family: 'Josefin Sans', sans-serif; cursor: pointer;
+  border: 1px dashed rgba(92,26,46,0.4); background: transparent;
+  color: var(--muted); transition: all .2s;
+}
+.btn-agotado-toggle:hover { border-color: var(--terra); color: var(--terra); }
+.btn-agotado-toggle.reactivar { border-color: #2a9d5c; color: #2a9d5c; }
+.admin-controls { display: none; padding: 0 20px 16px; }
+body.admin-mode .admin-controls { display: block; }
 .product-wishlist {
   position: absolute; top: 16px; right: 16px;
   width: 34px; height: 34px; border-radius: 50%;
@@ -797,7 +811,7 @@ footer {
 
 <!-- AUDIO -->
 <audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_fbe4680d34.mp3" type="audio/mpeg">
 </audio>
 
 <!-- MUSIC BAR -->
@@ -811,7 +825,7 @@ footer {
 
 <!-- CHAT BOTS -->
 <div class="chat-bots">
-  <button class="chat-btn telegram" onclick="window.open('https://t.me/veltro_vel_bot','_blank')">
+  <button class="chat-btn telegram" onclick="window.open('https://t.me/nexfit_vel_bot','_blank')">
     ✈️
     <span class="chat-tooltip">Bot de Ventas</span>
   </button>
@@ -879,7 +893,7 @@ footer {
       <div class="hero-img-2" style="display:flex;align-items:center;justify-content:center;font-size:64px;color:rgba(255,255,255,0.25);">👠</div>
       <div class="hero-img-3" style="display:flex;align-items:center;justify-content:center;font-size:64px;color:rgba(255,255,255,0.25);">🧥</div>
     </div>
-    <div class="hero-fashion-text">VELTRO</div>
+    <div class="hero-fashion-text">NEXFIT</div>
   </div>
 </section>
 
@@ -891,7 +905,7 @@ footer {
   </div>
   <div>
     <p class="about-text">
-      En VELTRO creemos que la ropa no es solo tela: es identidad, es arte, es la primera impresión que das al mundo sin decir una sola palabra. Nacimos para conectar el estilo contemporáneo con la calidez y vibra propia de Colombia.
+      En NEXFIT creemos que la ropa no es solo tela: es identidad, es arte, es la primera impresión que das al mundo sin decir una sola palabra. Nacimos para conectar el estilo contemporáneo con la calidez y vibra propia de Colombia.
     </p>
     <div class="about-quote">
       "La verdadera elegancia está en la autenticidad — en vestir lo que sientes y sentir lo que vistes."
@@ -1130,7 +1144,7 @@ footer {
         <div class="order-success">
           <div class="check">🎉</div>
           <h3>¡Pedido Confirmado!</h3>
-          <p id="successMsg">Tu pedido ha sido registrado. Nos pondremos en contacto contigo en las próximas horas para coordinar el pago y la entrega. ¡Gracias por elegir VELTRO! ✨</p>
+          <p id="successMsg">Tu pedido ha sido registrado. Nos pondremos en contacto contigo en las próximas horas para coordinar el pago y la entrega. ¡Gracias por elegir NEXFIT! ✨</p>
           <div style="margin-top:24px;">
             <button class="btn-next" style="width:100%;" onclick="closeCheckout()">Continuar Comprando</button>
           </div>
@@ -1153,8 +1167,8 @@ footer {
     <div class="deploy-step">
       <div class="deploy-num">02</div>
       <div class="deploy-step-title">GitHub — Repositorio</div>
-      <div class="deploy-step-desc">Sube este archivo HTML a tu repositorio <strong>akiles9722/Veltro</strong> que ya tienes creado en GitHub. Solo arrastra el archivo o usa el botón "Add file".</div>
-      <div class="deploy-code">github.com/akiles9722/Veltro</div>
+      <div class="deploy-step-desc">Sube este archivo HTML a tu repositorio <strong>akiles9722/Nexfit</strong> que ya tienes creado en GitHub. Solo arrastra el archivo o usa el botón "Add file".</div>
+      <div class="deploy-code">github.com/akiles9722/Nexfit</div>
     </div>
     <div class="deploy-step">
       <div class="deploy-num">03</div>
@@ -1165,8 +1179,8 @@ footer {
     <div class="deploy-step">
       <div class="deploy-num">04</div>
       <div class="deploy-step-title">Dominio Personalizado (opcional)</div>
-      <div class="deploy-step-desc">En Vercel ve a Settings → Domains → agrega tu dominio. Si no tienes, Vercel te da uno gratis: <em>veltro.vercel.app</em>. Para comprar dominio: namecheap.com o porkbun.com (~$10/año).</div>
-      <div class="deploy-code">veltro.vercel.app (gratis)</div>
+      <div class="deploy-step-desc">En Vercel ve a Settings → Domains → agrega tu dominio. Si no tienes, Vercel te da uno gratis: <em>nexfit.vercel.app</em>. Para comprar dominio: namecheap.com o porkbun.com (~$10/año).</div>
+      <div class="deploy-code">nexfit.vercel.app (gratis)</div>
     </div>
     <div class="deploy-step">
       <div class="deploy-num">05</div>
@@ -1177,7 +1191,7 @@ footer {
     <div class="deploy-step">
       <div class="deploy-num">06</div>
       <div class="deploy-step-title">WhatsApp Business</div>
-      <div class="deploy-step-desc">Descarga WhatsApp Business en tu celular → Configura el perfil de negocio "VELTRO" → Actualiza el número en el botón de WhatsApp de esta página con tu número real.</div>
+      <div class="deploy-step-desc">Descarga WhatsApp Business en tu celular → Configura el perfil de negocio "NEXFIT" → Actualiza el número en el botón de WhatsApp de esta página con tu número real.</div>
       <div class="deploy-code">wa.me/573122043152</div>
     </div>
   </div>
@@ -1188,9 +1202,9 @@ footer {
   <div class="footer-top">
     <div>
       <div class="footer-logo">VELTR<span>O</span></div>
-      <div class="footer-desc">Moda contemporánea con alma colombiana. Cada prenda cuenta una historia, cada look define un estilo.</div>
+      <div class="footer-desc">Moda contemporánea con estilo para todos. Cada prenda cuenta una historia, cada look define un estilo.</div>
       <div style="display:flex;gap:12px;margin-top:16px;">
-        <a href="https://t.me/veltro_vel_bot" target="_blank" style="color:var(--gold);font-size:20px;">✈️</a>
+        <a href="https://t.me/nexfit_vel_bot" target="_blank" style="color:var(--gold);font-size:20px;">✈️</a>
         <a href="https://wa.me/573122043152" target="_blank" style="color:var(--gold);font-size:20px;">💬</a>
       </div>
     </div>
@@ -1205,16 +1219,16 @@ footer {
       <h4>Ayuda</h4>
       <a href="#pagos">Métodos de pago</a>
       <a href="#contacto">Envíos</a>
-      <a href="https://t.me/veltro_vel_bot" target="_blank">Chat con Vera</a>
+      <a href="https://t.me/nexfit_vel_bot" target="_blank">Chat con Vera</a>
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <a href="https://t.me/veltro_vel_bot">Telegram Bot</a>
+      <a href="https://t.me/nexfit_vel_bot">Telegram Bot</a>
       <a href="https://wa.me/573122043152">WhatsApp</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 VELTRO — Todos los derechos reservados</span>
+    <span>© 2025 NEXFIT — Todos los derechos reservados</span>
     <span class="footer-brand">Hecho con ♥ en Colombia</span>
   </div>
 </footer>
@@ -1227,7 +1241,7 @@ const SUPABASE_URL = 'https://dafgslxsxfozquzywajp.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZmdzbHhzeGZvenF1enl3YWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2ODY0OTAsImV4cCI6MjA4ODI2MjQ5MH0.jcLXPUjNPZ2Jt7SmRQsGYsBbcgIj1BrLZlu7HSUjYiY';
 
 // Admin password (cámbiala)
-const ADMIN_PASSWORD = 'veltro2025';
+const ADMIN_PASSWORD = 'nexfit2025';
 
 // ══════════════════════════════════════════
 // ESTADO GLOBAL
@@ -1314,7 +1328,9 @@ function createProductCard(p) {
     : `<div class="product-img"><img src="${f}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;"></div>`
   ).join('');
 
-  const badgeHtml = p.badge === 'new' ? '<div class="product-badge badge-new">Nuevo</div>'
+  const agotado = p.stock === 0 || p.activo === false && p.stock !== undefined ? p.stock === 0 : false;
+  const badgeHtml = agotado ? '<div class="product-badge badge-agotado">Agotado</div>'
+    : p.badge === 'new' ? '<div class="product-badge badge-new">Nuevo</div>'
     : p.badge === 'hot' ? '<div class="product-badge badge-hot">Popular</div>' : '';
 
   const precio = typeof p.precio === 'number'
@@ -1338,7 +1354,12 @@ function createProductCard(p) {
       <div class="product-desc">${p.descripcion || ''}</div>
       <div class="product-footer">
         <div class="product-price">${precio}</div>
-        <button class="btn-cart" onclick="addToCart(${JSON.stringify(JSON.stringify(p)).slice(1,-1)})">+ Añadir</button>
+        <button class="btn-cart" ${agotado ? 'disabled' : `onclick="addToCart(${JSON.stringify(JSON.stringify(p)).slice(1,-1)})"`}>${agotado ? 'Agotado' : '+ Añadir'}</button>
+      </div>
+      <div class="admin-controls">
+        <button class="btn-agotado-toggle ${agotado ? 'reactivar' : ''}" onclick="toggleStock(${p.id}, ${agotado})">
+          ${agotado ? '✅ Marcar como Disponible' : '❌ Marcar como Agotado'}
+        </button>
       </div>
     </div>`;
   return div;
@@ -1474,10 +1495,10 @@ function selectPayOpt(method) {
   document.getElementById('pay_' + method)?.classList.add('selected');
 
   const infos = {
-    bancolombia: '🏦 <strong>Bancolombia / Nequi</strong><br>Cuenta de ahorros: <strong>123-456789-12</strong><br>Titular: VELTRO SAS<br>NIT: 900.123.456-1<br><br>Después de pagar, envíanos el comprobante por Telegram o WhatsApp.',
-    daviplata: '📱 <strong>Daviplata</strong><br>Número: <strong>300 123 4567</strong><br>A nombre de: VELTRO<br><br>Envíanos captura del pago por Telegram.',
-    bbva: '💳 <strong>BBVA Colombia</strong><br>Cuenta corriente: <strong>0011-1234567-89</strong><br>Titular: VELTRO SAS<br><br>Adjunta el comprobante al confirmar.',
-    efecty: '💵 <strong>Efecty</strong><br>Código de convenio: <strong>78542</strong><br>Nombre: VELTRO STORE<br><br>Guarda el recibo y compártelo por WhatsApp.',
+    bancolombia: '🏦 <strong>Bancolombia / Nequi</strong><br>Cuenta de ahorros: <strong>123-456789-12</strong><br>Titular: NEXFIT SAS<br>NIT: 900.123.456-1<br><br>Después de pagar, envíanos el comprobante por Telegram o WhatsApp.',
+    daviplata: '📱 <strong>Daviplata</strong><br>Número: <strong>300 123 4567</strong><br>A nombre de: NEXFIT<br><br>Envíanos captura del pago por Telegram.',
+    bbva: '💳 <strong>BBVA Colombia</strong><br>Cuenta corriente: <strong>0011-1234567-89</strong><br>Titular: NEXFIT SAS<br><br>Adjunta el comprobante al confirmar.',
+    efecty: '💵 <strong>Efecty</strong><br>Código de convenio: <strong>78542</strong><br>Nombre: NEXFIT STORE<br><br>Guarda el recibo y compártelo por WhatsApp.',
     contraentrega: '🚚 <strong>Contra Entrega</strong><br>Pagas en efectivo cuando recibas tu pedido.<br>Disponible en ciudades principales de Colombia.<br><br>El domiciliario lleva el POS para pagar con tarjeta también.'
   };
   const box = document.getElementById('payInfoBox');
@@ -1501,11 +1522,11 @@ async function submitOrder() {
 
   try {
     await supabaseFetch('/rest/v1/pedidos', 'POST', orderData);
-    document.getElementById('successMsg').textContent = `¡Pedido ${orderData.order_id} confirmado, ${nombre}! Te contactaremos al ${tel} para coordinar el pago por ${selectedPayment}. ¡Gracias por elegir VELTRO! ✨`;
+    document.getElementById('successMsg').textContent = `¡Pedido ${orderData.order_id} confirmado, ${nombre}! Te contactaremos al ${tel} para coordinar el pago por ${selectedPayment}. ¡Gracias por elegir NEXFIT! ✨`;
     cart = [];
     updateCartUI();
   } catch(e) {
-    document.getElementById('successMsg').textContent = `¡Pedido registrado! Nos pondremos en contacto contigo pronto. ¡Gracias por elegir VELTRO! ✨`;
+    document.getElementById('successMsg').textContent = `¡Pedido registrado! Nos pondremos en contacto contigo pronto. ¡Gracias por elegir NEXFIT! ✨`;
     cart = [];
     updateCartUI();
   }
@@ -1526,6 +1547,7 @@ function checkAdminPw() {
     isAdmin = true;
     document.getElementById('adminLoginModal').classList.remove('open');
     document.getElementById('adminPanel').classList.add('visible');
+    document.body.classList.add('admin-mode');
     document.getElementById('coleccion').scrollIntoView({behavior:'smooth'});
     showToast('👋 Bienvenido Admin');
   } else {
@@ -1535,6 +1557,7 @@ function checkAdminPw() {
 }
 function closeAdminPanel() {
   document.getElementById('adminPanel').classList.remove('visible');
+  document.body.classList.remove('admin-mode');
   isAdmin = false;
 }
 
@@ -1567,7 +1590,15 @@ function selectPayment(m) { showToast('💳 ' + m + ' seleccionado'); }
 // ══════════════════════════════════════════
 // MUSIC
 // ══════════════════════════════════════════
-function toggleMusic() {
+function toggleStock(productId, isAgotado) {
+  const nuevoStock = isAgotado ? 1 : 0;
+  supabaseFetch('/rest/v1/productos?id=eq.' + productId, 'PATCH', { stock: nuevoStock })
+    .then(() => {
+      showToast(isAgotado ? '✅ Producto marcado como Disponible' : '❌ Producto marcado como Agotado');
+      loadProducts('Todos');
+    })
+    .catch(() => showToast('❌ Error al actualizar el producto'));
+}
   const audio = document.getElementById('bgMusic');
   const bar   = document.getElementById('musicBar');
   if (audio.paused) {
