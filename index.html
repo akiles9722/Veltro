@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A3A2A">
+<meta name="description" content="NEXFIT — Moda para toda la familia. Ropa para hombres, mujeres y niños con envío a toda Colombia.">
 <title>NEXFIT — Moda para toda la familia</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%231A3A2A'/%3E%3Ctext y='72' x='50' text-anchor='middle' font-size='52' font-family='Georgia,serif' font-weight='700' fill='%23D4A843'%3ENF%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%231A3A2A'/%3E%3Ctext y='72' x='50' text-anchor='middle' font-size='52' font-family='Georgia,serif' font-weight='700' fill='%23D4A843'%3ENF%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -762,27 +766,140 @@ footer {
 }
 
 /* ── RESPONSIVE */
+/* ── HAMBURGER MENU */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; background: none; border: none;
+}
+.hamburger span {
+  width: 24px; height: 2px; background: var(--text);
+  transition: all .3s; display: block;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+.mobile-nav {
+  display: none; position: fixed; top: 72px; left: 0; right: 0;
+  background: var(--cream); border-bottom: 2px solid var(--terra);
+  z-index: 999; flex-direction: column; padding: 16px 24px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text); text-decoration: none; padding: 14px 0;
+  border-bottom: 1px solid rgba(26,58,42,0.1);
+  transition: color .2s;
+}
+.mobile-nav a:hover { color: var(--terra); }
+
+/* ── RESPONSIVE 900px */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-right { display: none; }
-  .hero-left { padding: 120px 32px 60px; }
-  .about-section { grid-template-columns: 1fr; padding: 60px 32px; gap: 32px; }
-  .payment-section { grid-template-columns: 1fr; padding: 60px 32px; gap: 40px; }
-  .products-section { padding: 60px 24px; }
-  .footer-top { grid-template-columns: 1fr 1fr; }
-  .deploy-section { padding: 60px 32px; }
-  header { padding: 0 24px; }
+  .hero-left { padding: 100px 28px 60px; }
+  .hero h1 { font-size: 56px; }
+  .about-section { grid-template-columns: 1fr; padding: 60px 28px; gap: 32px; }
+  .payment-section { grid-template-columns: 1fr; padding: 60px 28px; gap: 40px; }
+  .products-section { padding: 48px 20px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .deploy-section { padding: 60px 28px; }
+  header { padding: 0 20px; }
   nav { display: none; }
+  .hamburger { display: flex; }
   .cart-sidebar { width: 100%; right: -100%; }
+  .music-bar span { display: none; }
+  .music-bar { padding: 10px 14px; }
+  .stat-num { font-size: 24px; }
+  .hero-stats { gap: 20px; }
+  .about-pillars { gap: 20px; }
+  .payment-title { font-size: 36px; }
+  .section-title { font-size: 36px; }
 }
+
+/* ── RESPONSIVE 600px (móvil) */
 @media (max-width: 600px) {
-  .products-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-  .section-header { flex-direction: column; gap: 20px; align-items: flex-start; }
-  .footer-top { grid-template-columns: 1fr; }
-  .payment-grid { grid-template-columns: 1fr; }
+  header { height: 60px; padding: 0 16px; }
+  .logo { font-size: 22px; letter-spacing: 3px; }
+  .mobile-nav { top: 60px; }
+
+  /* Hero */
+  .hero-left { padding: 90px 20px 48px; }
+  .hero h1 { font-size: 44px; }
+  .hero-sub { font-size: 14px; }
+  .hero-btns { flex-direction: column; gap: 12px; }
+  .btn-primary, .btn-outline-hero { width: 100%; text-align: center; justify-content: center; padding: 14px 20px; }
+  .hero-stats { gap: 16px; margin-top: 36px !important; }
+  .stat-num { font-size: 22px; }
+  .stat-label { font-size: 8px; }
+
+  /* About */
+  .about-section { padding: 48px 20px; }
+  .about-title { font-size: 30px; }
+  .about-text { font-size: 14px; }
+  .about-quote { font-size: 18px; padding-left: 16px; }
+  .about-pillars { gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+  /* Products */
+  .products-section { padding: 40px 14px; }
+  .section-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+  .section-title { font-size: 30px; }
+  .filter-tabs { gap: 6px; }
+  .filter-tab { padding: 6px 14px; font-size: 9px; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .product-name { font-size: 16px; }
+  .product-price { font-size: 18px; }
+  .product-info { padding: 14px 14px 18px; }
+  .btn-cart { padding: 8px 12px; font-size: 9px; letter-spacing: 1px; }
+  .product-desc { display: none; }
+
+  /* Admin panel */
   .admin-form { grid-template-columns: 1fr; }
+  .admin-panel { padding: 28px 20px; }
+
+  /* Payment */
+  .payment-section { padding: 48px 20px; }
+  .payment-title { font-size: 28px; }
+  .payment-grid { grid-template-columns: 1fr 1fr; }
+  .payment-card { padding: 16px 12px; }
+  .payment-card.featured { flex-direction: column; text-align: center; }
+  .payment-badge { margin: 8px auto 0; }
+
+  /* Cart */
+  .cart-sidebar { width: 100%; right: -100%; }
+  .cart-header { padding: 20px 20px; }
+  .cart-items { padding: 16px 20px; }
+  .cart-footer { padding: 16px 20px; }
+
+  /* Modal checkout */
+  .modal { border-radius: 0; max-height: 100vh; }
+  .modal-header { padding: 24px 20px 16px; }
+  .modal-body { padding: 20px; }
   .form-row { grid-template-columns: 1fr; }
   .payment-options { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer-top { grid-template-columns: 1fr; gap: 24px; }
+  footer { padding: 48px 20px 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-logo { font-size: 24px; }
+
+  /* Chat buttons */
+  .chat-bots { bottom: 80px; right: 16px; }
+  .chat-btn { width: 46px; height: 46px; font-size: 18px; }
+  .music-bar { bottom: 16px; left: 16px; padding: 8px 12px; border-radius: 30px; }
+
+  /* Deploy guide */
+  .deploy-section { padding: 48px 20px; }
+  .deploy-title { font-size: 28px; }
+  .deploy-steps { grid-template-columns: 1fr; }
+}
+
+/* ── RESPONSIVE 380px (móviles pequeños) */
+@media (max-width: 380px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 38px; }
+  .payment-grid { grid-template-columns: 1fr; }
 }
 
 /* ── LOADING */
@@ -851,7 +968,7 @@ footer {
 
 <!-- HEADER -->
 <header>
-  <div class="logo">VELTR<span>O</span></div>
+  <div class="logo">NEXFI<span>T</span></div>
   <nav>
     <a href="#inicio">Inicio</a>
     <a href="#coleccion">Colección</a>
@@ -865,8 +982,20 @@ footer {
       <span class="cart-count" id="cartCount">0</span>
     </button>
     <button class="btn-admin" onclick="openAdminLogin()">Admin</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#inicio" onclick="closeMobileNav()">Inicio</a>
+  <a href="#coleccion" onclick="closeMobileNav()">Colección</a>
+  <a href="#nosotros" onclick="closeMobileNav()">Nosotros</a>
+  <a href="#pagos" onclick="closeMobileNav()">Pagos</a>
+  <a href="#contacto" onclick="closeMobileNav()">Contacto</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
@@ -1201,7 +1330,7 @@ footer {
 <footer id="pie">
   <div class="footer-top">
     <div>
-      <div class="footer-logo">VELTR<span>O</span></div>
+      <div class="footer-logo">NEXFI<span>T</span></div>
       <div class="footer-desc">Moda contemporánea con estilo para todos. Cada prenda cuenta una historia, cada look define un estilo.</div>
       <div style="display:flex;gap:12px;margin-top:16px;">
         <a href="https://t.me/nexfit_vel_bot" target="_blank" style="color:var(--gold);font-size:20px;">✈️</a>
@@ -1599,6 +1728,19 @@ function toggleStock(productId, isAgotado) {
     })
     .catch(() => showToast('❌ Error al actualizar el producto'));
 }
+
+function toggleMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  const ham = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  ham.classList.toggle('open');
+}
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+function toggleMusic() {
   const audio = document.getElementById('bgMusic');
   const bar   = document.getElementById('musicBar');
   if (audio.paused) {
