@@ -757,60 +757,19 @@ footer {
   .products-section { padding: 60px 24px; }
   .footer-top { grid-template-columns: 1fr 1fr; }
   .deploy-section { padding: 60px 32px; }
-  header { padding: 0 24px; height: 64px; }
-  .logo { font-size: 22px; }
-  nav { display: none; } /* En móviles se usa el botón de menú que podrías agregar después o se navega bajando */
+  header { padding: 0 24px; }
+  nav { display: none; }
   .cart-sidebar { width: 100%; right: -100%; }
 }
 @media (max-width: 600px) {
-  .hero h1 { font-size: clamp(42px, 10vw, 52px); }
-  .hero-sub { font-size: 14px; margin: 16px 0 32px; }
-  .btn-primary, .btn-outline-hero { padding: 12px 24px; font-size: 10px; width: 100%; text-align: center; }
-  
-  .about-title { font-size: 32px; }
-  .section-title { font-size: 32px; }
-  .payment-title { font-size: 32px; }
-  
-  .products-grid { grid-template-columns: 1fr; gap: 24px; }
-  .product-image-wrap { aspect-ratio: 4/5; } /* Imágenes un poco más largas en móviles */
-  
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
   .section-header { flex-direction: column; gap: 20px; align-items: flex-start; }
-  .filter-tabs { gap: 6px; }
-  .filter-tab { padding: 6px 12px; font-size: 9px; }
-  
-  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-top { grid-template-columns: 1fr; }
   .payment-grid { grid-template-columns: 1fr; }
-  
   .admin-form { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .payment-options { grid-template-columns: 1fr; }
-  
-  .modal-body, .modal-header { padding: 24px 20px; }
-  .modal-title { font-size: 22px; }
-  .music-bar { bottom: 80px; left: 16px; padding: 8px 12px; }
-  .chat-bots { bottom: 16px; right: 16px; }
 }
-
-/* ── LIGHTBOX ── */
-.lightbox-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-  z-index: 99999; display: none; align-items: center; justify-content: center;
-  backdrop-filter: blur(5px);
-}
-.lightbox-overlay.open { display: flex; }
-.lightbox-img {
-  max-width: 90%; max-height: 90vh; object-fit: contain;
-  border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  transition: transform 0.3s;
-}
-.lightbox-close {
-  position: absolute; top: 20px; right: 20px;
-  background: rgba(255,255,255,0.2); border: none; color: white;
-  width: 44px; height: 44px; border-radius: 50%; font-size: 28px;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
-.lightbox-close:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
 
 /* ── LOADING */
 .loading-spinner {
@@ -856,16 +815,10 @@ footer {
     ✈️
     <span class="chat-tooltip">Bot de Ventas</span>
   </button>
-  <button class="chat-btn whatsapp" onclick="window.open('https://wa.me/573000000000','_blank')">
+  <button class="chat-btn whatsapp" onclick="window.open('https://wa.me/573122043152','_blank')">
     💬
     <span class="chat-tooltip">WhatsApp Business</span>
   </button>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">×</button>
-  <img class="lightbox-img" id="lightboxImg" src="" alt="Vista previa del producto" onclick="event.stopPropagation()">
 </div>
 
 <!-- TOAST -->
@@ -1187,8 +1140,8 @@ footer {
   </div>
 </div>
 
-<!-- DEPLOY GUIDE -->
-<section class="deploy-section" id="contacto">
+<!-- DEPLOY GUIDE (oculto para público) -->
+<section class="deploy-section" id="contacto" style="display:none;">
   <div class="deploy-title">🚀 Cómo conectar todo y publicar en internet</div>
   <div class="deploy-steps">
     <div class="deploy-step">
@@ -1225,13 +1178,7 @@ footer {
       <div class="deploy-num">06</div>
       <div class="deploy-step-title">WhatsApp Business</div>
       <div class="deploy-step-desc">Descarga WhatsApp Business en tu celular → Configura el perfil de negocio "VELTRO" → Actualiza el número en el botón de WhatsApp de esta página con tu número real.</div>
-      <div class="deploy-code">wa.me/57TUNUMERO</div>
-    </div>
-    <div class="deploy-step">
-      <div class="deploy-num">07</div>
-      <div class="deploy-step-title">Google Sheets — Sincronización</div>
-      <div class="deploy-step-desc">Crea un Google Sheet en blanco. Ve a Extensiones > Apps Script. Pega el código que te compartí, y publícalo como Aplicación Web (con "Cualquier persona"). Luego, pega la URL final en la variable WEBHOOK_SHEETS_URL del archivo index.html.html.</div>
-      <div class="deploy-code">var WEBHOOK_SHEETS_URL = 'https://script.google.com/...'</div>
+      <div class="deploy-code">wa.me/573122043152</div>
     </div>
   </div>
 </section>
@@ -1244,7 +1191,7 @@ footer {
       <div class="footer-desc">Moda contemporánea con alma colombiana. Cada prenda cuenta una historia, cada look define un estilo.</div>
       <div style="display:flex;gap:12px;margin-top:16px;">
         <a href="https://t.me/veltro_vel_bot" target="_blank" style="color:var(--gold);font-size:20px;">✈️</a>
-        <a href="https://wa.me/573000000000" target="_blank" style="color:var(--gold);font-size:20px;">💬</a>
+        <a href="https://wa.me/573122043152" target="_blank" style="color:var(--gold);font-size:20px;">💬</a>
       </div>
     </div>
     <div class="footer-col">
@@ -1263,7 +1210,7 @@ footer {
     <div class="footer-col">
       <h4>Contacto</h4>
       <a href="https://t.me/veltro_vel_bot">Telegram Bot</a>
-      <a href="https://wa.me/573000000000">WhatsApp</a>
+      <a href="https://wa.me/573122043152">WhatsApp</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1281,10 +1228,6 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 // Admin password (cámbiala)
 const ADMIN_PASSWORD = 'veltro2025';
-
-// 🔗 WEBHOOK PARA GOOGLE SHEETS
-// Pega aquí la URL terminada en /exec que te da Google Apps Script
-const WEBHOOK_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxqte0pz5GmxS1BqymXyAMRiqTlmmqGohUElY_PiXEQSupwhmFUwcPhVEKElBNoEoZAmQ/exec';
 
 // ══════════════════════════════════════════
 // ESTADO GLOBAL
@@ -1368,7 +1311,7 @@ function createProductCard(p) {
 
   const slidesHtml = fotos.map(f => isEmoji
     ? `<div class="product-img product-img-placeholder">${f}</div>`
-    : `<div class="product-img"><img src="${f}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;" onclick="openLightbox('${f}')"></div>`
+    : `<div class="product-img"><img src="${f}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;"></div>`
   ).join('');
 
   const badgeHtml = p.badge === 'new' ? '<div class="product-badge badge-new">Nuevo</div>'
@@ -1395,7 +1338,7 @@ function createProductCard(p) {
       <div class="product-desc">${p.descripcion || ''}</div>
       <div class="product-footer">
         <div class="product-price">${precio}</div>
-        <button class="btn-cart" onclick="addToCart(decodeURIComponent('${encodeURIComponent(JSON.stringify(p)).replace(/'/g, "%27")}'))">+ Añadir</button>
+        <button class="btn-cart" onclick="addToCart(${JSON.stringify(JSON.stringify(p)).slice(1,-1)})">+ Añadir</button>
       </div>
     </div>`;
   return div;
@@ -1558,17 +1501,6 @@ async function submitOrder() {
 
   try {
     await supabaseFetch('/rest/v1/pedidos', 'POST', orderData);
-    
-    // Novedad: Enviar también a Google Sheets si la URL está configurada
-    if (WEBHOOK_SHEETS_URL && WEBHOOK_SHEETS_URL.trim() !== '') {
-      fetch(WEBHOOK_SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Importante para evitar bloqueos por CORS desde Google Apps Script
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
-      }).catch(err => console.error("Error sincronizando Sheets:", err));
-    }
-
     document.getElementById('successMsg').textContent = `¡Pedido ${orderData.order_id} confirmado, ${nombre}! Te contactaremos al ${tel} para coordinar el pago por ${selectedPayment}. ¡Gracias por elegir VELTRO! ✨`;
     cart = [];
     updateCartUI();
@@ -1656,19 +1588,6 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// ══════════════════════════════════════════
-// LIGHTBOX
-// ══════════════════════════════════════════
-function openLightbox(src) {
-  const overlay = document.getElementById('lightboxOverlay');
-  const img = document.getElementById('lightboxImg');
-  img.src = src;
-  overlay.classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightboxOverlay').classList.remove('open');
 }
 
 // ══════════════════════════════════════════
