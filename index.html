@@ -902,6 +902,56 @@ footer {
   .payment-grid { grid-template-columns: 1fr; }
 }
 
+/* ── LIGHTBOX */
+.lightbox-overlay {
+  position: fixed; inset: 0; background: rgba(15,31,22,0.92);
+  z-index: 4000; display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px); padding: 20px;
+}
+.lightbox-overlay.open { display: flex; }
+.lightbox-box {
+  background: var(--white); width: 100%; max-width: 800px;
+  max-height: 90vh; overflow-y: auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+.lightbox-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--cream); border: none; cursor: pointer;
+  font-size: 22px; color: var(--text); z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.lightbox-close:hover { background: var(--terra); color: white; }
+.lightbox-img-wrap {
+  aspect-ratio: 3/4; background: var(--warm);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.lightbox-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.lightbox-info { padding: 32px; display: flex; flex-direction: column; gap: 12px; }
+.lightbox-cat { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); }
+.lightbox-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--burgundy); line-height: 1.2; }
+.lightbox-desc { font-size: 13px; color: var(--muted); line-height: 1.8; flex: 1; }
+.lightbox-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 8px; }
+.lightbox-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--burgundy); font-weight: 600; }
+.lightbox-dots { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.lightbox-dot {
+  width: 48px; height: 48px; border-radius: 4px; cursor: pointer;
+  border: 2px solid transparent; overflow: hidden; background: var(--warm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; transition: border-color .2s;
+}
+.lightbox-dot.active { border-color: var(--terra); }
+.lightbox-dot img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 600px) {
+  .lightbox-box { grid-template-columns: 1fr; }
+  .lightbox-img-wrap { aspect-ratio: 4/3; }
+  .lightbox-info { padding: 20px; }
+  .lightbox-name { font-size: 22px; }
+}
+
 /* ── LOADING */
 .loading-spinner {
   display: flex; align-items: center; justify-content: center;
@@ -928,7 +978,8 @@ footer {
 
 <!-- AUDIO -->
 <audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_fbe4680d34.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2023/03/09/audio_1e0d7e1e7e.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_8cb749f5d9.mp3" type="audio/mpeg">
 </audio>
 
 <!-- MUSIC BAR -->
@@ -937,7 +988,7 @@ footer {
   <div class="wave-bars">
     <span></span><span></span><span></span><span></span><span></span>
   </div>
-  <span>Ambiente</span>
+  <span id="musicLabel">▶ Música</span>
 </div>
 
 <!-- CHAT BOTS -->
@@ -1159,6 +1210,27 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <div class="lightbox-box" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <div class="lightbox-img-wrap">
+      <img id="lightboxImg" src="" alt="">
+      <div id="lightboxEmoji" style="display:none;font-size:120px;"></div>
+    </div>
+    <div class="lightbox-info">
+      <div class="lightbox-cat" id="lightboxCat"></div>
+      <div class="lightbox-name" id="lightboxName"></div>
+      <div class="lightbox-desc" id="lightboxDesc"></div>
+      <div class="lightbox-footer">
+        <div class="lightbox-price" id="lightboxPrice"></div>
+        <button class="btn-primary" id="lightboxCartBtn" onclick="addToCartFromLightbox()">+ Añadir al carrito</button>
+      </div>
+      <div class="lightbox-dots" id="lightboxDots"></div>
+    </div>
+  </div>
+</div>
 
 <!-- CART SIDEBAR -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
@@ -1466,15 +1538,19 @@ function createProductCard(p) {
     ? '$' + p.precio.toLocaleString('es-CO')
     : (p.precio_texto || '$0');
 
+  // Guardar producto en mapa global para evitar problemas con JSON en onclick
+  window._products = window._products || {};
+  window._products[p.id] = p;
+
   div.innerHTML = `
-    <div class="product-image-wrap">
+    <div class="product-image-wrap" onclick="openLightbox(${p.id})">
       <div class="product-images" id="slide_${p.id}">${slidesHtml}</div>
       ${dotsHtml}
       ${badgeHtml}
-      <button class="product-wishlist" title="Guardar">♡</button>
+      <button class="product-wishlist" title="Guardar" onclick="event.stopPropagation();this.textContent=this.textContent==='♡'?'♥':'♡';this.style.background=this.textContent==='♥'?'var(--terra)':'white';showToast(this.textContent==='♥'?'♥ Guardado':'♡ Removido')">♡</button>
       ${fotos.length > 1 ? `
-        <button class="product-nav product-nav-prev" onclick="slideNav(${p.id},-1,event)">‹</button>
-        <button class="product-nav product-nav-next" onclick="slideNav(${p.id},1,event)">›</button>
+        <button class="product-nav product-nav-prev" onclick="event.stopPropagation();slideNav(${p.id},-1,event)">‹</button>
+        <button class="product-nav product-nav-next" onclick="event.stopPropagation();slideNav(${p.id},1,event)">›</button>
       ` : ''}
     </div>
     <div class="product-info">
@@ -1483,7 +1559,7 @@ function createProductCard(p) {
       <div class="product-desc">${p.descripcion || ''}</div>
       <div class="product-footer">
         <div class="product-price">${precio}</div>
-        <button class="btn-cart" ${agotado ? 'disabled' : `onclick="addToCart(${JSON.stringify(JSON.stringify(p)).slice(1,-1)})"`}>${agotado ? 'Agotado' : '+ Añadir'}</button>
+        <button class="btn-cart" ${agotado ? 'disabled' : `onclick="addToCartById(${p.id})"`}>${agotado ? 'Agotado' : '+ Añadir'}</button>
       </div>
       <div class="admin-controls">
         <button class="btn-agotado-toggle ${agotado ? 'reactivar' : ''}" onclick="toggleStock(${p.id}, ${agotado})">
@@ -1729,6 +1805,77 @@ function toggleStock(productId, isAgotado) {
     .catch(() => showToast('❌ Error al actualizar el producto'));
 }
 
+function addToCartById(id) {
+  const p = (window._products || {})[id];
+  if (!p) { showToast('⚠️ Error al añadir'); return; }
+  const exist = cart.find(c => c.id === p.id);
+  if (exist) { exist.qty++; } else { cart.push({ ...p, qty: 1 }); }
+  updateCartUI();
+  showToast('✨ Añadido al carrito');
+  openCart();
+}
+
+let lightboxProductId = null;
+let lightboxFotos = [];
+let lightboxIsEmoji = false;
+let lightboxIdx = 0;
+
+function openLightbox(id) {
+  const p = (window._products || {})[id];
+  if (!p) return;
+  lightboxProductId = id;
+  lightboxFotos = p.foto_url
+    ? (p.foto_url.includes(',') ? p.foto_url.split(',').map(s=>s.trim()) : [p.foto_url])
+    : (p.emojis || ['👗']);
+  lightboxIsEmoji = !p.foto_url;
+  lightboxIdx = 0;
+
+  document.getElementById('lightboxCat').textContent = p.categoria || '';
+  document.getElementById('lightboxName').textContent = p.nombre;
+  document.getElementById('lightboxDesc').textContent = p.descripcion || '';
+  const precio = typeof p.precio === 'number' ? '$' + p.precio.toLocaleString('es-CO') : (p.precio_texto || '');
+  document.getElementById('lightboxPrice').textContent = precio;
+
+  setLightboxImage(0);
+
+  // Dots/thumbnails
+  const dotsEl = document.getElementById('lightboxDots');
+  dotsEl.innerHTML = lightboxFotos.length > 1 ? lightboxFotos.map((f,i) =>
+    `<div class="lightbox-dot ${i===0?'active':''}" onclick="setLightboxImage(${i})">
+      ${lightboxIsEmoji ? f : `<img src="${f}" alt="">`}
+    </div>`
+  ).join('') : '';
+
+  document.getElementById('lightboxOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function setLightboxImage(idx) {
+  lightboxIdx = idx;
+  const img = document.getElementById('lightboxImg');
+  const emoji = document.getElementById('lightboxEmoji');
+  if (lightboxIsEmoji) {
+    img.style.display = 'none';
+    emoji.style.display = 'block';
+    emoji.textContent = lightboxFotos[idx] || '👗';
+  } else {
+    img.style.display = 'block';
+    emoji.style.display = 'none';
+    img.src = lightboxFotos[idx];
+  }
+  document.querySelectorAll('.lightbox-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+}
+
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function addToCartFromLightbox() {
+  addToCartById(lightboxProductId);
+  closeLightbox();
+}
+
 function toggleMobileNav() {
   const nav = document.getElementById('mobileNav');
   const ham = document.getElementById('hamburger');
@@ -1743,13 +1890,17 @@ function closeMobileNav() {
 function toggleMusic() {
   const audio = document.getElementById('bgMusic');
   const bar   = document.getElementById('musicBar');
+  const label = document.getElementById('musicLabel');
   if (audio.paused) {
-    audio.volume = 0.25;
-    audio.play().catch(()=>{});
-    bar.classList.add('playing');
+    audio.volume = 0.3;
+    audio.play().then(() => {
+      bar.classList.add('playing');
+      if(label) label.textContent = '❚❚ Música';
+    }).catch(() => showToast('⚠️ No se pudo reproducir la música'));
   } else {
     audio.pause();
     bar.classList.remove('playing');
+    if(label) label.textContent = '▶ Música';
   }
 }
 
