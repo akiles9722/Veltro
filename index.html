@@ -1717,24 +1717,52 @@ async function submitOrder() {
   const dir    = document.getElementById('ch_dir').value;
   const city   = document.getElementById('ch_city').value;
 
+  if (!nombre || !tel || !dir || !city) {
+    showToast('⚠️ Por favor completa todos los campos');
+    return;
+  }
+
+  const orderId = 'ORD-WEB-' + Date.now();
+  const productos = cart.map(c => `${c.nombre} x${c.qty}`).join(', ');
+  const total = '$' + cart.reduce((s,c) => s + (typeof c.precio === 'number' ? c.precio * c.qty : 0), 0).toLocaleString('es-CO');
+
   const orderData = {
-    order_id: 'ORD-WEB-' + Date.now(),
-    producto: cart.map(c => `${c.nombre} x${c.qty}`).join(', '),
-    precio: '$' + cart.reduce((s,c) => s + (typeof c.precio === 'number' ? c.precio * c.qty : 0), 0).toLocaleString('es-CO'),
+    order_id: orderId,
+    producto: productos,
+    precio: total,
     nombre, telefono: tel, direccion: dir, ciudad: city,
     canal: 'Web', status: 'nuevo'
   };
 
+  // Mensaje para Telegram
+  const tgMsg = encodeURIComponent(
+    `🛍️ *NUEVO PEDIDO NEXFIT*\n` +
+    `🆔 ${orderId}\n\n` +
+    `👤 *Cliente:* ${nombre}\n` +
+    `📞 *Teléfono:* ${tel}\n` +
+    `📍 *Dirección:* ${dir}, ${city}\n\n` +
+    `📦 *Productos:* ${productos}\n` +
+    `💰 *Total:* ${total}\n` +
+    `💳 *Pago:* ${selectedPayment || 'No especificado'}\n` +
+    `📡 *Canal:* Página Web\n\n` +
+    `✅ Pedido listo para procesar.`
+  );
+
+  // Enviar notificación a Telegram
+  const TG_TOKEN = '8697169904:AAHaiw-dDBcGuhCRxqVLFdSTwj1hhFwu-5o';
+  const TG_CHAT  = '2072937317';
+  try {
+    await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${TG_CHAT}&text=${tgMsg}&parse_mode=Markdown`);
+  } catch(e) { /* silencioso */ }
+
+  // Guardar en Supabase
   try {
     await supabaseFetch('/rest/v1/pedidos', 'POST', orderData);
-    document.getElementById('successMsg').textContent = `¡Pedido ${orderData.order_id} confirmado, ${nombre}! Te contactaremos al ${tel} para coordinar el pago por ${selectedPayment}. ¡Gracias por elegir NEXFIT! ✨`;
-    cart = [];
-    updateCartUI();
-  } catch(e) {
-    document.getElementById('successMsg').textContent = `¡Pedido registrado! Nos pondremos en contacto contigo pronto. ¡Gracias por elegir NEXFIT! ✨`;
-    cart = [];
-    updateCartUI();
-  }
+  } catch(e) { /* continúa aunque falle Supabase */ }
+
+  document.getElementById('successMsg').textContent = `¡Pedido ${orderId} confirmado, ${nombre}! Te contactaremos al ${tel} para coordinar el pago. ¡Gracias por elegir NEXFIT! ✨`;
+  cart = [];
+  updateCartUI();
 }
 
 // ══════════════════════════════════════════
